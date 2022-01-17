@@ -12,7 +12,7 @@ $('#btnLogin').click(function () {
   $('#panelRegister').hide()
 })
 
-// 表单验证
+// 登陆表单验证
 $('#formLogin').validate({
   onBlur: true,
   onKeyup: true,
@@ -88,5 +88,27 @@ $('#formLogin').validate({
   },
   invalid () {
     console.log('表单验证失败')
+  }
+})
+
+
+// 注册表单验证
+$('#formRegister').validate({
+  onBlur: true,
+  onKeyup: true,
+  sendForm: false,  // 禁用表单的action
+  description: {
+    firstname: {
+      required: 'firstname不能为空!',
+      pattern: 'firstname只能为数字和字母且不能少于3位!'
+    },
+    lastname: {
+      required: 'lastname不能为空!',
+      pattern: 'lastname只能为数字和字母且不能少于3位!'
+    }
+  },
+  valid () {
+  },
+  invalid () {
   }
 })

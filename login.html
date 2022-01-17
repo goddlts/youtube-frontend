@@ -35,8 +35,10 @@
       <h2>创建您的账号</h2>
       <form id="formRegister">
         <div class="input-group">
-          <input name="firstname" required type="text" placeholder="firstname" value="" />
-          <input name="lastname" required type="text" placeholder="lastname" value="" />
+          <input name="firstname" data-describedby="firstname-err" data-description="firstname" data-required
+            data-pattern="\w{3,11}" required type="text" placeholder="firstname" value="" />
+          <input name="lastname" data-describedby="lastname-err" data-description="lastname" data-required
+            data-pattern="\w{3,11}" required type="text" required type="text" placeholder="lastname" value="" />
         </div>
         <input name="username" required minlength="4" type="text" placeholder="username" value="" />
         <input name="email" required type="email" placeholder="email" value="" />
