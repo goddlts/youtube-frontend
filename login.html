@@ -18,8 +18,12 @@
     <div id="panelLogin" class="panel">
       <h2>登录您的账号</h2>
       <form id="formLogin">
-        <input type="email" placeholder="email" value="xxx@xxx.xxx" />
-        <input type="password" placeholder="password" value="xxxxxx" />
+        <input type="email" data-describedby="email-err" data-description="email" placeholder="email" data-required
+          data-pattern="\w+@\w+(\.\w+){1,2}" name="email" value="xxx@xxx.xxx" />
+        <span id="email-err"></span>
+        <input type="password" data-describedby="pass-err" data-description="pass" placeholder="password" data-required
+          data-pattern="\w{6,15}" name="pass" value="xxxxxx" />
+        <span id="pass-err"></span>
         <div class="action input-group">
           <span id="btnRegister" class="pointer">注册</span><button>登录</button>
         </div>
@@ -47,6 +51,8 @@
   </div>
 
   <script src="./lib/jquery/jquery.min.js"></script>
+  <script src="./lib/jquery-validate/jquery-validate.min.js"></script>
+
   <script src="./scripts/login.js"></script>
 </body>
 
