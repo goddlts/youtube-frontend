@@ -22,7 +22,7 @@
           data-pattern="\w+@\w+(\.\w+){1,2}" name="email" value="xxx@xxx.xxx" />
         <span id="email-err"></span>
         <input type="password" data-describedby="pass-err" data-description="pass" placeholder="password" data-required
-          data-pattern="\w{6,15}" name="pass" value="xxxxxx" />
+          data-pattern="\w{6,15}" name="password" value="xxxxxx" />
         <span id="pass-err"></span>
         <div class="action input-group">
           <span id="btnRegister" class="pointer">注册</span><button>登录</button>
@@ -52,7 +52,11 @@
 
   <script src="./lib/jquery/jquery.min.js"></script>
   <script src="./lib/jquery-validate/jquery-validate.min.js"></script>
+  <script src="./lib/axios/axios.min.js"></script>
 
+  <script src="./scripts/utils.js"></script>
+
+  <script src="./scripts/http.js"></script>
   <script src="./scripts/login.js"></script>
 </body>
 

@@ -28,7 +28,46 @@ $('#formLogin').validate({
     }
   },
   valid () {
-    console.log($(this).serialize())
+    // console.log($(this).serialize())
+    // http.get
+
+    // 字符串 键=值&键=值
+    // serialize() 是把表单的数据收集成 键=值&键=值
+    // const postData = $(this).serialize()
+
+    // 收集表单数据，[ {name: 'email', value: 'xxx@xxx.xxx'} ]
+    // console.log($(this).serializeArray())
+
+    // 我们想要的格式： {"email":"xxxy@xxx.xxx","password":"123456"}
+
+    // console.log($(this).serializeObject())
+
+    const postData = $(this).serializeObject()
+
+    // 验证成功，发送ajax请求，实现登陆功能
+    // 服务器在接收post数据的时候，接收的是JSON形式的字符串
+    http
+      .post('/auth/login', postData)
+      .then(res => {
+        // console.log(res.status)
+        // console.log(res.data)
+        
+        const { success, data, message } = res.data
+        // success 是登陆成功还是失败 true
+        // data 登陆成功才有，是服务器返回的登陆成功后的凭证
+        // message 登陆失败才有，失败的原因
+        if (success) {
+          // 要把凭证保存
+          // 提示
+          // 跳转到首页
+          location.href = '/index.html'
+        } else {
+          // 提示失败的原因
+        }
+      })
+      .catch(err => {
+        console.log('网络请求失败')
+      })
   },
   invalid () {
     console.log('表单验证失败')
