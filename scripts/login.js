@@ -108,6 +108,43 @@ $('#formRegister').validate({
     }
   },
   valid () {
+    // 发送请求，实现注册功能
+    const postData = $(this).serializeObject()
+    http
+      .post('/auth/signup', postData)
+      .then(res => {
+        const { success, data, message } = res.data
+
+        if (success) {
+          // 注册成功
+
+          // 保存凭证
+          // 提示
+          Toastify({
+            text: '注册成功',
+            duration: 3000,
+            backgroundColor: "linear-gradient(to right, #00b09b, #96c93d)"
+          }).showToast()
+          // 跳转到首页
+          location.href = '/index.html'
+
+        } else {
+          // 注册失败
+          Toastify({
+            text: message,
+            duration: 3000,
+            backgroundColor: "linear-gradient(to right, #00b09b, #96c93d)"
+          }).showToast()
+        }
+
+      })
+      .catch(err => {
+        Toastify({
+          text: err.response?.data?.message || err,
+          duration: 3000,
+          backgroundColor: "linear-gradient(to right, #00b09b, #96c93d)"
+        }).showToast()
+      })
   },
   invalid () {
   }
