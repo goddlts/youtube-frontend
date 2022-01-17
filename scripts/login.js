@@ -56,17 +56,34 @@ $('#formLogin').validate({
         // success 是登陆成功还是失败 true
         // data 登陆成功才有，是服务器返回的登陆成功后的凭证
         // message 登陆失败才有，失败的原因
+
         if (success) {
           // 要把凭证保存
           // 提示
+          Toastify({
+            text: '登陆成功',
+            duration: 3000,
+            backgroundColor: "linear-gradient(to right, #00b09b, #96c93d)"
+          }).showToast()
           // 跳转到首页
           location.href = '/index.html'
         } else {
           // 提示失败的原因
+          console.log('xxxx')
+          console.log(Toastify)
+          Toastify({
+            text: message,
+            duration: 3000,
+            backgroundColor: "linear-gradient(to right, #00b09b, #96c93d)"
+          }).showToast()
         }
       })
       .catch(err => {
-        console.log('网络请求失败')
+        Toastify({
+          text: err.response?.data?.message || err,
+          duration: 3000,
+          backgroundColor: "linear-gradient(to right, #00b09b, #96c93d)"
+        }).showToast()
       })
   },
   invalid () {
