@@ -137,3 +137,13 @@ $('.modal-header-left svg').click(function () {
   $('.video-preview').show()
   $('.video-form').hide()
 })
+
+// 2.4 点击next切换
+$('.next-button').click(function () {
+  // 更改按钮上的文字
+  // this.textContent = 'Upload'
+
+  $(this).text('Upload')
+  $('.video-preview').hide()
+  $('.video-form').show()
+})
