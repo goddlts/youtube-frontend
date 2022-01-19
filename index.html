@@ -9,10 +9,12 @@
   <meta name="description" content="Youtube Clone" />
   <link rel="apple-touch-icon" href="/youtube.svg" />
   <title>YouTube</title>
+  <link rel="stylesheet" href="./lib/video.js/video-js.min.css">
   <link href="./css/style.css" rel="stylesheet" />
   <link href="./css/layout.css" rel="stylesheet" />
   <link href="./css/home.css" rel="stylesheet" />
   <link rel="stylesheet" href="./css/pager.css">
+  <link rel="stylesheet" href="./lib/toastify-js/toastify.css">
 </head>
 
 <body>
@@ -182,7 +184,12 @@
         <div class="tab video-preview">
           <div>
             <!-- 视频播放 -->
-
+            <video id="my-pre-player" class="video-js vjs-big-play-centered" controls preload="auto">
+              <p class="vjs-no-js"> To view this video please enable JavaScript, and consider upgrading to a web browser
+                that
+                <a href="https://videojs.com/html5-video-support/" target="_blank"> supports HTML5 video </a>
+              </p>
+            </video>
           </div>
         </div>
         <div class="tab video-form" style="display: none;">
@@ -238,6 +245,8 @@
   <script src="./lib/axios/axios.js"></script>
   <script src="./lib/dayjs/dayjs.min.js"></script>
   <script src="./lib/dayjs/plugin/relativeTime.js"></script>
+  <script src="./lib/video.js/video.min.js"></script>
+  <script src="./lib/toastify-js/toastify.js"></script>
 
   <script src="./scripts/http.js"></script>
   <script src="./scripts/index.js"></script>
