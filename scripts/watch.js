@@ -56,11 +56,49 @@ function loadData () {
   
         // 等评论加载完毕，给评论的文本框注册事件
         handleComment(data)
+
+        // 5. 订阅和取消订阅
+        handleSubscribe(data.User.id)
       }
     })
 }
 
 loadData()
+
+function handleSubscribe(userId) {
+  $('.subscribe').click(function () {
+    http
+      .get(`/users/${userId}/togglesubscribe`, {
+        headers: {
+          Authorization: 'Bearer ' + localStorage.getItem('token')
+        }
+      })
+      .then(res => {
+        const { success } = res.data
+        if (success) {
+          $(this).toggleClass('active')
+
+          // 订阅的人数
+          const count = parseInt($('.channel-info-meta span').text())
+          if ($(this).hasClass('active')) {
+            // 此时取消了订阅
+            $(this).text('Subscribe')
+            $('.channel-info-meta span').text(count - 1 + ' subscribers')
+          } else {
+            $(this).text('Subscribed')
+            $('.channel-info-meta span').text(count + 1 + ' subscribers')
+          }
+
+        } else {
+          Toastify({
+            text: '操作失败',
+            duration: 3000,
+            backgroundColor: "linear-gradient(to right, #00b09b, #96c93d)"
+          }).showToast()
+        }
+      })
+  })
+}
 
 
 function loadComments(data) {
