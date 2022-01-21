@@ -44,8 +44,20 @@ http
       const html = template('tplVideo', {
         video: data
       })
-
       $('#videoDetails').html(html)
-    }
 
+      // 3. 设置喜欢或者不喜欢
+      setLikeOrDislike(data)
+    }
   })
+
+
+function setLikeOrDislike(video) {
+  if (video.isLiked) {
+    $('.like svg').css('fill', 'rgb(62, 166, 255)')
+    $('.dislike svg').css('fill', 'rgb(56, 56, 56)')
+  } else if (video.isDisliked) {
+    $('.dislike svg').css('fill', 'rgb(62, 166, 255)')
+    $('.like svg').css('fill', 'rgb(56, 56, 56)')
+  }
+}
