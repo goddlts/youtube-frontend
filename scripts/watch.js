@@ -15,47 +15,94 @@ if (!token) {
 let queryObj = query(location.search)
 
 // 发送请求获取数据
-http
-  .get(`/videos/${queryObj.id}`, {
-    headers: {
-      Authorization: 'Bearer ' + token
-    }
-  })
-  .then(res => {
-    const { success, data } = res.data
-    if (success) {
-      // 1. 播放当前视频
-      const player = videojs('my-player', {
-        autoplay: true,
-        // 静音播放
-        muted: 'muted',
-      }, function () {
-        // 视频播放完成之后执行
-        this.on('ended', function () {
-          videojs.log('播放结束了!')
+// 加载视频详情
+function loadData () {
+  http
+    .get(`/videos/${queryObj.id}`, {
+      headers: {
+        Authorization: 'Bearer ' + token
+      }
+    })
+    .then(res => {
+      const { success, data } = res.data
+      if (success) {
+        // 1. 播放当前视频
+        const player = videojs('my-player', {
+          autoplay: true,
+          // 静音播放
+          muted: 'muted',
+        }, function () {
+          // 视频播放完成之后执行
+          this.on('ended', function () {
+            videojs.log('播放结束了!')
+          })
         })
-      })
-      player.src({
-        type: "video/mp4",
-        src:data.url
-      })
+        player.src({
+          type: "video/mp4",
+          src:data.url
+        })
+  
+        // 2. 渲染视频详情
+        const html = template('tplVideo', {
+          video: data
+        })
+        $('#videoDetails').html(html)
+  
+        // 3. 设置喜欢或者不喜欢
+        setLikeOrDislike(data)
+  
+        // 4. 渲染评论
+        loadComments(data)
+  
+        // 等评论加载完毕，给评论的文本框注册事件
+        handleComment(data)
+      }
+    })
+}
 
-      // 2. 渲染视频详情
-      const html = template('tplVideo', {
-        video: data
-      })
-      $('#videoDetails').html(html)
+loadData()
 
-      // 3. 设置喜欢或者不喜欢
-      setLikeOrDislike(data)
 
-      // 4. 渲染评论
-      const htmlComment = template('tplComment', {
-        video: data
-      })
-      $('.comment-container').html(htmlComment)
+function loadComments(data) {
+  const htmlComment = template('tplComment', {
+    video: data
+  })
+  $('.comment-container').html(htmlComment)
+}
+
+function handleComment() {
+  $('.add-comment textarea').keydown(function (e) {
+    if (e.key === 'Enter') {
+      e.preventDefault()
+      http
+        .post(`/videos/${queryObj.id}/comment`, {
+          text: this.value
+        }, {
+          headers: {
+            Authorization: 'Bearer ' + localStorage.getItem('token')
+          }
+        })
+        .then(res => {
+          const { success } = res.data
+          if (success) {
+            Toastify({
+              text: '发表评论成功',
+              duration: 3000,
+              backgroundColor: "linear-gradient(to right, #00b09b, #96c93d)"
+            }).showToast()
+            // 重新加载评论列表
+            loadData()
+          } else {
+            Toastify({
+              text: '发表评论失败',
+              duration: 3000,
+              backgroundColor: "linear-gradient(to right, #00b09b, #96c93d)"
+            }).showToast()
+          }
+        })
     }
   })
+}
 
 
 function setLikeOrDislike(video) {
