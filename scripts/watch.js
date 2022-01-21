@@ -48,6 +48,12 @@ http
 
       // 3. 设置喜欢或者不喜欢
       setLikeOrDislike(data)
+
+      // 4. 渲染评论
+      const htmlComment = template('tplComment', {
+        video: data
+      })
+      $('.comment-container').html(htmlComment)
     }
   })
 

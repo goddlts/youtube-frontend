@@ -169,28 +169,7 @@
 
         </div>
         <div class="comment-container">
-          <h3>1 comments</h3>
-          <div class="add-comment">
-            <img
-              src="https://res.cloudinary.com/tylerdurden/image/upload/v1602657481/random/pngfind.com-default-image-png-6764065_krremh.png"
-              alt="avatar">
-            <textarea placeholder="Add a public comment"></textarea>
-          </div>
-          <!-- 评论列表 -->
-          <div class="list">
-            <div class="comment">
-              <a href="/channel/4959abc5-89dd-4b8f-bbc3-ad6c0e8a13f4"><img
-                  src="https://res.cloudinary.com/tylerdurden/image/upload/v1602657481/random/pngfind.com-default-image-png-6764065_krremh.png"
-                  alt="avatar"></a>
-              <div class="comment-info">
-                <p class="secondary">
-                  <span><a href="/channel/4959abc5-89dd-4b8f-bbc3-ad6c0e8a13f4">xxxx123</a></span><span
-                    style="margin-left: 0.6rem">14 hours ago</span>
-                </p>
-                <p>ad</p>
-              </div>
-            </div>
-          </div>
+          <!-- 评论区域 -->
         </div>
       </div>
       <div class="related-videos">
@@ -276,6 +255,36 @@
       </div>
     </a>
     {{ /each }}
+  </script>
+
+  <script id="tplComment" type="text/html">
+    <h3>{{ video.comments.length }} comments</h3>
+    <div class="add-comment">
+      <!-- 此处应该显示的是当前登陆的用户的头像
+           当前登陆用户的信息，应该再次发送请求，接口地址：/me
+      -->
+      <img
+        src="https://res.cloudinary.com/tylerdurden/image/upload/v1602657481/random/pngfind.com-default-image-png-6764065_krremh.png"
+        alt="avatar">
+      <textarea placeholder="Add a public comment"></textarea>
+    </div>
+    <!-- 评论列表 -->
+    <div class="list">
+      {{ each video.comments }}
+      <div class="comment">
+        <a href="/channel.html?id={{ $value.User.id }}"><img
+            src="{{ $value.User.avatar }}"
+            alt="avatar"></a>
+        <div class="comment-info">
+          <p class="secondary">
+            <span><a href="/channel.html?id={{ $value.User.id }}">{{ $value.User.username }}</a></span><span
+              style="margin-left: 0.6rem">{{ $value.createdAt | relativeTime }}</span>
+          </p>
+          <p>{{ $value.text }}</p>
+        </div>
+      </div>
+      {{ /each }}
+    </div>
   </script>
 
   <script src="./lib/jquery/jquery.min.js"></script>
