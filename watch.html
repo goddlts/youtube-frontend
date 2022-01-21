@@ -194,65 +194,12 @@
         </div>
       </div>
       <div class="related-videos">
-        <h3 style="margin-bottom: 1rem">Up Next</h3>
-
-        <a href="/watch.html?id=b89cba34-4188-4c9d-a31e-4976fefd2aed">
-          <div class="sc-fzozJi dteCCc">
-            <img class="thumb"
-              src="http://res.cloudinary.com/nllcoder/video/upload/v1637310562/youtube/uigpmbcrxny7ddabkiwj.jpg"
-              alt="thumbnail">
-            <div class="video-info-container">
-              <div class="channel-avatar"></div>
-              <div class="video-info">
-                <h4>we</h4>
-                <span class="secondary">xxxx123</span>
-                <p class="secondary">
-                  <span> views</span> <span>•</span> <span>18 hours ago</span>
-                </p>
-              </div>
-            </div>
-          </div>
-        </a>
-
-        <a href="/watch.html?id=014b0418-0ead-430e-ae9b-65079eb40c29">
-          <div class="sc-fzozJi dteCCc">
-            <img class="thumb"
-              src="http://res.cloudinary.com/nllcoder/video/upload/v1637310427/youtube/sdsk6hdmzra7vpuotgws.jpg"
-              alt="thumbnail">
-            <div class="video-info-container">
-              <div class="channel-avatar"></div>
-              <div class="video-info">
-                <h4>234</h4>
-                <span class="secondary">xxxx123</span>
-                <p class="secondary">
-                  <span>0 views</span> <span>•</span> <span>18 hours ago</span>
-                </p>
-              </div>
-            </div>
-          </div>
-        </a>
-
-        <a href="/watch.html?id=ae7c68ea-4f88-4fcd-b115-57939c15d728">
-          <div class="sc-fzozJi dteCCc">
-            <img class="thumb"
-              src="http://res.cloudinary.com/nllcoder/video/upload/v1637310393/youtube/qiddbp2kgf3ztoiux85a.jpg"
-              alt="thumbnail">
-            <div class="video-info-container">
-              <div class="channel-avatar"></div>
-              <div class="video-info">
-                <h4></h4>
-                <span class="secondary">xxxx123</span>
-                <p class="secondary">
-                  <span> views</span> <span>•</span> <span>18 hours ago</span>
-                </p>
-              </div>
-            </div>
-          </div>
-        </a>
+        <!-- 右侧的推荐视频 -->
       </div>
     </div>
   </div>
 
+  <!-- 视频详情模板 -->
   <script id="tplVideo" type="text/html">
     <div class="video-info">
       <h3>{{ video.title }}</h3>
@@ -304,6 +251,31 @@
       </div>
       <p>{{ video.description }}</p>
     </div>
+  </script>
+
+  <!-- 右侧推荐视频模板 -->
+  <script id="tplRelatedVideos" type="text/html">
+    <h3 style="margin-bottom: 1rem">Up Next</h3>
+
+    {{ each videos }}
+    <a href="/watch.html?id={{ $value.id }}">
+      <div class="sc-fzozJi dteCCc">
+        <img class="thumb"
+          src="{{ $value.thumbnail }}"
+          alt="thumbnail">
+        <div class="video-info-container">
+          <div class="channel-avatar"></div>
+          <div class="video-info">
+            <h4>{{ $value.title }}</h4>
+            <span class="secondary">{{ $value.description }}</span>
+            <p class="secondary">
+              <span>{{ $value.views }} views</span> <span>•</span> <span>{{ $value.createdAt | relativeTime }}</span>
+            </p>
+          </div>
+        </div>
+      </div>
+    </a>
+    {{ /each }}
   </script>
 
   <script src="./lib/jquery/jquery.min.js"></script>

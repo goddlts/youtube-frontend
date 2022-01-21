@@ -61,3 +61,23 @@ function setLikeOrDislike(video) {
     $('.like svg').css('fill', 'rgb(56, 56, 56)')
   }
 }
+
+// 加载右侧的列表数据
+function loadRelatedVideos (videoId) {
+  // videoId 把当前的视频过滤掉
+  http
+    .get('/videos')
+    .then(res => {
+      let { success, data } = res.data
+      if (success) {
+        data = data.filter(item => item.id != videoId)
+
+        const html = template('tplRelatedVideos', {
+          videos: data.splice(0, 4)
+        })
+        $('.related-videos').html(html)
+      }
+    })
+}
+
+loadRelatedVideos(queryObj.id)
