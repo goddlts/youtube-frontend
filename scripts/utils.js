@@ -15,3 +15,22 @@ $.fn.serializeObject = function () {
 }
 
 // $('表单').serializeObject()
+
+
+// 把查询字符串解析成对象
+function query(str) {
+  // str ---》  ?id=xxx&name=xxxxx
+  str = str.replace('?', '')
+  const arr = str.split('&')
+  const obj = {}
+  arr.forEach(item => {
+    // item --> id=xxx
+    const tmpArr = item.split('=')
+    if (tmpArr.length === 2) {
+      let key = tmpArr[0]
+      let value = tmpArr[1]
+      obj[key] = value
+    }
+  })
+  return obj
+}
