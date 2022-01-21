@@ -13,4 +13,31 @@ if (!token) {
 }
 
 let queryObj = query(location.search)
-console.log(queryObj.id)
+
+// 发送请求获取数据
+http
+  .get(`/videos/${queryObj.id}`, {
+    headers: {
+      Authorization: 'Bearer ' + token
+    }
+  })
+  .then(res => {
+    const { success, data } = res.data
+    if (success) {
+      // 播放当前视频
+      const player = videojs('my-player', {
+        autoplay: true,
+        // 静音播放
+        muted: 'muted',
+      }, function () {
+        // 视频播放完成之后执行
+        this.on('ended', function () {
+          videojs.log('播放结束了!')
+        })
+      })
+      player.src({
+        type: "video/mp4",
+        src:data.url
+      })
+    }
+  })
