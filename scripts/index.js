@@ -1,11 +1,3 @@
-// 注册dayjs的插件
-dayjs.extend(window.dayjs_plugin_relativeTime)
-
-// 设置模板引擎的过滤器
-template.defaults.imports.relativeTime = function (value) {
-  return dayjs().to(dayjs(value))
-}
-
 // 1. 发送请求，获取视频列表
 function loadData(pagenum, pagesize) {
   httpV2

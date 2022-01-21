@@ -1,3 +1,13 @@
+if (window.dayjs) {
+  // 注册dayjs的插件
+  dayjs.extend(window.dayjs_plugin_relativeTime)
+  
+  // 设置模板引擎的过滤器
+  template.defaults.imports.relativeTime = function (value) {
+    return dayjs().to(dayjs(value))
+  }
+}
+
 // utils 通用模块
 // 可以把通用的函数放到这个js文件中
 

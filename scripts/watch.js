@@ -24,7 +24,7 @@ http
   .then(res => {
     const { success, data } = res.data
     if (success) {
-      // 播放当前视频
+      // 1. 播放当前视频
       const player = videojs('my-player', {
         autoplay: true,
         // 静音播放
@@ -39,5 +39,13 @@ http
         type: "video/mp4",
         src:data.url
       })
+
+      // 2. 渲染视频详情
+      const html = template('tplVideo', {
+        video: data
+      })
+
+      $('#videoDetails').html(html)
     }
+
   })
