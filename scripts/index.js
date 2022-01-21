@@ -93,7 +93,7 @@ $('#video-upload').change(function () {
   })
 
   // 上传视频
-  // upload(file)
+  upload(file)
 })
 
 let toastify = null
@@ -129,6 +129,7 @@ function upload(file) {
 
       // 上传视频的地址
       // res.data.url
+      window.videoUrl = res.data.url
     })
 }
 
@@ -143,7 +144,66 @@ $('.next-button').click(function () {
   // 更改按钮上的文字
   // this.textContent = 'Upload'
 
-  $(this).text('Upload')
-  $('.video-preview').hide()
-  $('.video-form').show()
+  if (this.textContent === 'Next') {
+    $(this).text('Upload')
+    $('.video-preview').hide()
+    $('.video-form').show()
+  } else {
+    // 判断视频的地址是否存在
+    if (!window.videoUrl) {
+      return Toastify({
+        text: '请先把视频上传完',
+        backgroundColor: "linear-gradient(to right, #00b09b, #96c93d)"
+      }).showToast()
+    }
+
+    let thumbnail = window.videoUrl.replace('mp4', 'jpg')
+
+    // 2.5 点击upload 把数据保存到自己服务器
+    http
+      .post('/videos', {
+        title: $('#title').val(),
+        description: $('#description').val(),
+        // 视频的路径
+        url: window.videoUrl,
+        // 缩略图的路径
+        thumbnail: thumbnail
+      }, {
+        headers: {
+          Authorization: 'Bearer ' + localStorage.getItem('token')
+        }
+      })
+      .then(res => {
+        if (res.data.success) {
+          window.videoUrl = ''
+          // 重新设置按钮上的文字
+          $(this).text('Next')
+          // 关闭弹出框
+          $('.modal-wrapper').hide()
+          $('.video-preview').show()
+          $('.video-form').hide()
+          loadData(1, 9)
+
+          Toastify({
+            text: '视频保存成功',
+            backgroundColor: "linear-gradient(to right, #00b09b, #96c93d)"
+          }).showToast()
+        } else {
+          Toastify({
+            text: '视频保存失败',
+            backgroundColor: "linear-gradient(to right, #00b09b, #96c93d)"
+          }).showToast()
+        }
+      })
+      .catch(err => {
+        Toastify({
+          text: '视频保存失败',
+          backgroundColor: "linear-gradient(to right, #00b09b, #96c93d)"
+        }).showToast()
+        // if (err.response.status === 401) {
+        //   // 跳转到登陆页面
+        // }
+      })
+
+  }
 })

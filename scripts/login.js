@@ -59,6 +59,8 @@ $('#formLogin').validate({
 
         if (success) {
           // 要把凭证保存
+          // 把token保存到本地存储中
+          localStorage.setItem('token', data)
           // 提示
           Toastify({
             text: '登陆成功',
@@ -119,6 +121,8 @@ $('#formRegister').validate({
           // 注册成功
 
           // 保存凭证
+          // 把token保存到本地存储中
+          localStorage.setItem('token', data)
           // 提示
           Toastify({
             text: '注册成功',
